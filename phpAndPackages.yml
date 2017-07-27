@@ -4,7 +4,7 @@
 
   tasks:
 
-- name: install packages
+  - name: install packages
     apt: name={{ item }} update_cache=yes state=latest
     with_items:
       - git
