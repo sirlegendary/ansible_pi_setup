@@ -7,12 +7,21 @@
   - name: install packages
     apt: name={{ item }} update_cache=yes state=latest
     with_items:
-      - git
+      - apache2
+      - libapache2-mod-php7.0
       - php7.0
       - php7.0-mcrypt
       - php7.0-mysql
       - php7.0-json
       - php7.0-curl
-      - libapache2-mod-php7.0
       - php7.0-mbstring
-      - apache2
+      - mysql-server
+
+  - name: install composer
+    shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    args:
+      creates: /usr/local/bin/composer
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
